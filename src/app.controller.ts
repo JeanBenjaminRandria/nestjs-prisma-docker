@@ -1,7 +1,7 @@
 import { PrismaService } from './prisma/prisma.service';
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Param, Post, Body, Put, Delete, Query } from '@nestjs/common';
 import { AppService } from './app.service';
-import { Food } from '@prisma/client';
+import { User as UserModel, Post as PostModel, Prisma } from '@prisma/client';
 
 @Controller()
 export class AppController {
@@ -10,13 +10,5 @@ export class AppController {
     private readonly prismaService: PrismaService,
   ) {}
 
-  @Get()
-  getHello(): string {
-    return this.appService.getHello();
-  }
-
-  @Get('foods')
-  getFoods(): Promise<Food[]> {
-    return this.prismaService.food.findMany();
-  }
+  
 }

@@ -1,16 +1,37 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
+generator client {
+  provider = "prisma-client-js"
+
+  // https://github.com/prisma/prisma-client-js/issues/616#issuecomment-616107821
+  binaryTargets = ["native", "darwin-arm64", "darwin", "debian-openssl-1.1.x"]
+}
+
+model User {
+  id Int @id @default(autoincrement())
+  email String?
+  name String?
+  posts Post[]
+}
+
+model Post {
+  id Int @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAd DateTime @updatedAt
+  title String
+  content String?
+  published Boolean @default(false)
+  VieCount Int @default(0)
+  author User? @relation(fields: [authorId], references: [id])
+  authorId Int? 
+}
+
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
-generator client {
-  provider = "prisma-client-js"
-}
 
-model Food {
-  id   Int    @id @default(autoincrement())
-  name String
-}
+
+
